@@ -29,7 +29,7 @@ class MOSNet(Metric):
 
         _input = keras.Input(shape=(None, 257))
 
-        re_input = layers.Reshape((-1, 257, 1), input_shape=(-1, 257))(_input)
+        re_input = layers.Reshape((-1, 257, 1))(_input)
 
         # CNN
         conv1 = (Conv2D(16, (3, 3), strides=(1, 1), activation='relu',
@@ -60,7 +60,7 @@ class MOSNet(Metric):
         conv4 = (Conv2D(128, (3, 3), strides=(1, 3), activation='relu',
                  padding='same'))(conv4)
 
-        re_shape = layers.Reshape((-1, 4*128), input_shape=(-1, 4, 128))(conv4)
+        re_shape = layers.Reshape((-1, 4*128))(conv4)
 
         # BLSTM
         blstm1 = Bidirectional(
@@ -93,7 +93,7 @@ class MOSNet(Metric):
                               n_fft=self.FFT_SIZE,
                               hop_length=self.HOP_LENGTH,
                               win_length=self.WIN_LENGTH,
-                              window=scipy.signal.hamming,
+                              window=scipy.signal.windows.hamming,
                               )
 
         # magnitude spectrogram
