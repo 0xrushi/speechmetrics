@@ -1,4 +1,3 @@
-
 # -*- coding: utf-8 -*-
 
 
@@ -16,15 +15,15 @@ setup(
         'resampy',
         'pystoi',
         'museval',
-        'tensorflow>=2.0.0',
+        'tensorflow>=2.15.0',
         'librosa',
         # This is requred, but srmrpy pull it in,
-	    # and there is a pip3 conflict if we have the following
-	    # line.
+            # and there is a pip3 conflict if we have the following
+            # line.
         #'gammatone @ git+https://github.com/detly/gammatone',
-        'pypesq @ git+https://github.com/vBaiCai/python-pesq',
+        'pesq @ git+https://github.com/ludlows/PESQ',
+        'pypesq @ file:///mnt/sdc3/Documents/python-pesq',
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
-        'pesq @ git+https://github.com/ludlows/python-pesq',
     ],
     include_package_data=True
 )

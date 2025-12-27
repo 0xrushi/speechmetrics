@@ -8,10 +8,11 @@ class NBPESQ(Metric):
         self.fixed_rate = 16000
 
     def test_window(self, audios, rate):
-        from pypesq import pesq
+        # Use pypesq directly since it provides same function name as pesq
+        import pypesq
         if len(audios) != 2:
             raise ValueError('NB_PESQ needs a reference and a test signals.')
-        return {'nb_pesq': pesq(audios[1], audios[0], rate)}
+        return {'nb_pesq': pypesq.pesq(audios[1], audios[0], rate)}
 
 
 def load(window, hop=None):
