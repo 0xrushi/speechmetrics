@@ -10,11 +10,13 @@ If you find speechmetrics useful, you are welcome to cite the original papers fo
 # Installation
 As of our recent tests, installation goes smoothly on ubuntu, but there may be some compiler errors for `pypesq` on iOs.
 
-Note that the mosnet seems to be incompatible with numpy >= 1.24
-
 ```
-pip install numpy==1.23.4
 pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics
+```
+
+To enable the (non-intrusive) MOS predictor, install the optional dependency:
+```
+pip install dnsmos
 ```
 
 # Usage
@@ -57,6 +59,10 @@ scores = metrics(path_to_estimate_file, path_to_reference)
 metrics = speechmetrics.load(['bsseval', 'mosnet'], window_length)
 scores = metrics(path_to_estimate_file, path_to_reference)
 
+# load all absolute metrics but skip the MOS predictor
+metrics = speechmetrics.load('absolute', window_length, exclude=['mosnet'])
+scores = metrics(path_to_audio_file)
+
 ```
 
 # Available metrics
@@ -66,7 +72,9 @@ scores = metrics(path_to_estimate_file, path_to_reference)
 ### MOSNet (`absolute.mosnet` or `mosnet`)
 *dimensionless, higher is better. 0=very bad, 5=very good*
 
-As provided by the authors of [MOSNet: Deep Learning based Objective Assessment for Voice Conversion](https://arxiv.org/abs/1904.08352). Original github [here](https://github.com/lochenchou/MOSNet)
+This metric is provided under the historical name `mosnet`, but is now implemented via the PyTorch-based DNSMOS model (install with `pip install dnsmos`).
+
+Original MOSNet paper: [MOSNet: Deep Learning based Objective Assessment for Voice Conversion](https://arxiv.org/abs/1904.08352). Original github [here](https://github.com/lochenchou/MOSNet)
 > @article{lo2019mosnet,  
   title={MOSNet: Deep Learning based Objective Assessment for Voice Conversion},  
   author={Lo, Chen-Chou and Fu, Szu-Wei and Huang, Wen-Chin and Wang, Xin and Yamagishi, Junichi and Tsao, Yu and Wang, Hsin-Min},  

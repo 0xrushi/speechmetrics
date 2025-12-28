@@ -120,7 +120,7 @@ class MetricsList:
         return result
 
 
-def load(metrics='', window=2, verbose=False):
+def load(metrics='', window=2, verbose=False, exclude=None):
     """ Load the desired metrics inside a Metrics object that can then
     be called to compute all the desired metrics.
 
@@ -155,14 +155,30 @@ def load(metrics='', window=2, verbose=False):
 
     if isinstance(metrics, str):
         metrics = [metrics]
+    if exclude is None:
+        exclude = []
+    if isinstance(exclude, str):
+        exclude = [exclude]
     for module_info in iterator:
+        if any([pattern in module_info.name for pattern in exclude]):
+            continue
         if any([metric in module_info.name for metric in metrics]):
-            module = importlib.import_module(module_info.name)
+            try:
+                module = importlib.import_module(module_info.name)
+            except ImportError as e:
+                if verbose:
+                    print('Skipped', module_info.name, '-', e)
+                continue
             if module not in found_modules:
-                found_modules += [module],
+                found_modules += [module]
                 if hasattr(module, 'load'):
                     load_function = getattr(module, 'load')
-                    new_metric = load_function(window)
+                    try:
+                        new_metric = load_function(window)
+                    except ImportError as e:
+                        if verbose:
+                            print('Skipped', module_info.name, '-', e)
+                        continue
                     new_metric.verbose = verbose
                     result += new_metric
                     print('Loaded ', module_info.name)

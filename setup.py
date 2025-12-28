@@ -15,7 +15,6 @@ setup(
         'resampy',
         'pystoi',
         'museval',
-        'tensorflow>=2.15.0',
         'librosa',
         # This is requred, but srmrpy pull it in,
             # and there is a pip3 conflict if we have the following
@@ -24,5 +23,9 @@ setup(
     'pesq @ git+https://github.com/ludlows/PESQ',
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
     ],
+    extras_require={
+        # Enables the `absolute.mosnet` metric (implemented via DNSMOS).
+        'dnsmos': ['dnsmos'],
+    },
     include_package_data=True
 )
