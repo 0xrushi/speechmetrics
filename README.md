@@ -14,9 +14,16 @@ As of our recent tests, installation goes smoothly on ubuntu, but there may be s
 pip install git+https://github.com/aliutkus/speechmetrics#egg=speechmetrics
 ```
 
-To enable the (non-intrusive) MOS predictor, install the optional dependency:
+To enable the (non-intrusive) MOS predictor without TensorFlow, install a
+supported backend (package availability varies by index/platform). The most
+portable option is:
 ```
-pip install dnsmos
+pip install speechmos
+```
+
+If you can’t install a backend, load absolute metrics while skipping MOS:
+```
+speechmetrics.load('absolute', window_length, exclude=['mosnet'])
 ```
 
 # Usage
@@ -72,7 +79,7 @@ scores = metrics(path_to_audio_file)
 ### MOSNet (`absolute.mosnet` or `mosnet`)
 *dimensionless, higher is better. 0=very bad, 5=very good*
 
-This metric is provided under the historical name `mosnet`, but is now implemented via the PyTorch-based DNSMOS model (install with `pip install dnsmos`).
+This metric is provided under the historical name `mosnet`, but is now implemented via a non-TensorFlow DNSMOS backend (when available).
 
 Original MOSNet paper: [MOSNet: Deep Learning based Objective Assessment for Voice Conversion](https://arxiv.org/abs/1904.08352). Original github [here](https://github.com/lochenchou/MOSNet)
 > @article{lo2019mosnet,  

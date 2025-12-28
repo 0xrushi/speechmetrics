@@ -24,8 +24,10 @@ setup(
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
     ],
     extras_require={
-        # Enables the `absolute.mosnet` metric (implemented via DNSMOS).
-        'dnsmos': ['dnsmos'],
+        # Enables the `absolute.mosnet` metric with a non-TensorFlow backend.
+        'mos': ['speechmos'],
+        # Kept for compatibility: some users provide a separate `dnsmos` package.
+        'dnsmos': [],
     },
     include_package_data=True
 )
