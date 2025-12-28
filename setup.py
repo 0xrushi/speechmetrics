@@ -21,8 +21,7 @@ setup(
             # and there is a pip3 conflict if we have the following
             # line.
         #'gammatone @ git+https://github.com/detly/gammatone',
-        'pesq @ git+https://github.com/ludlows/PESQ',
-        'pypesq @ file:///mnt/sdc3/Documents/python-pesq',
+    'pesq @ git+https://github.com/ludlows/PESQ',
         'srmrpy @ git+https://github.com/jfsantos/SRMRpy',
     ],
     include_package_data=True
